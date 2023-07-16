@@ -158,22 +158,18 @@ function animate() {
 	renderer.render( scene, camera );
 }
 
-animate();
+window.addEventListener("resize", () => {
+	onWindowResize(); // your function?
+	});
+    
 
-////////
-function mycode()
-{
-	console.log("TWST");
- 	if (swarm.allAtTarget) {
- 		for (var i=0; i<25; i++)
- 		{
- 			swarm.drones[i].setLightColour(0xffffff);
- 		}
- 	}
+function onWindowResize() {
+	camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+	renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
-//const myTimeout = setInterval(mycode, 1000);
-////////
+animate();
 
 
 
