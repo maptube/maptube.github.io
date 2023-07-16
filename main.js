@@ -77,7 +77,42 @@ let pat_forward = function() {
 	console.log("hello from function 1!");
 	for (let i=0; i<swarm.drones.length; i++) {
 		if (swarm.drones[i].lightIsOn) {
-			swarm.drones[i].setDeltaTarget(0,0,4);
+			swarm.drones[i].setDeltaTarget(0,0,6);
+		}
+	}
+}
+let pat_red = function() {
+	for (let i=0; i<swarm.drones.length; i++) {
+		if (swarm.drones[i].lightIsOn) {
+			swarm.drones[i].setLightColour(0xff0000);
+		}
+	}
+}
+let pat_blue = function() {
+	for (let i=0; i<swarm.drones.length; i++) {
+		if (swarm.drones[i].lightIsOn) {
+			swarm.drones[i].setLightColour(0x0000ff);
+		}
+	}
+}
+let pat_green = function() {
+	for (let i=0; i<swarm.drones.length; i++) {
+		if (swarm.drones[i].lightIsOn) {
+			swarm.drones[i].setLightColour(0x00ff00);
+		}
+	}
+}
+let pat_yellow = function() {
+	for (let i=0; i<swarm.drones.length; i++) {
+		if (swarm.drones[i].lightIsOn) {
+			swarm.drones[i].setLightColour(0xffff00);
+		}
+	}
+}
+let pat_magenta = function() {
+	for (let i=0; i<swarm.drones.length; i++) {
+		if (swarm.drones[i].lightIsOn) {
+			swarm.drones[i].setLightColour(0xff00ff);
 		}
 	}
 }
@@ -89,7 +124,7 @@ let pat1_kala = function() {
 		DronePatterns.lambda, DronePatterns.space2,
 		DronePatterns.alpha
 	]);
-	swarm.setPattern(pat,-5,3,0);
+	swarm.setPattern(pat,-5,3,-2);
 }
 let pat2_genethlia = function() {
 	console.log("hello from function 1!");
@@ -103,7 +138,7 @@ let pat2_genethlia = function() {
 		DronePatterns.yiota, DronePatterns.space2,
 		DronePatterns.alpha
 	]);
-	swarm.setPattern(pat,-5,3,0);
+	swarm.setPattern(pat,-6,3,-2);
 }
 let pat3_f = function() {
 	console.log("hello from function 1!");
@@ -114,23 +149,27 @@ let pat3_f = function() {
 		DronePatterns.rho, DronePatterns.space2,
 		DronePatterns.alpha
 	]);
-	swarm.setPattern(pat,-5,3,0);
+	swarm.setPattern(pat,-5,3,-1);
 }
 let pat4_happy = function() {
 	let pat = swarm.compositePattern(
 		[DronePatterns.emojiHappy]
 	);
-	swarm.setPattern(pat,0,4,0);
+	swarm.setPattern(pat,0,4,-2);
 }
 //swarm.setPattern(pat1,-5,3,0);
 let sequencer = new Sequencer();
 sequencer.push(pat1_kala);
+sequencer.push(pat_blue);
 sequencer.push(pat_forward); //essentially a wait pattern so you can read the word
 sequencer.push(pat2_genethlia);
+sequencer.push(pat_red);
 sequencer.push(pat_forward);
 sequencer.push(pat3_f);
+sequencer.push(pat_magenta);
 sequencer.push(pat_forward);
 sequencer.push(pat4_happy);
+sequencer.push(pat_yellow);
 
 //origin.material.color.set(0x00ff00);
 
