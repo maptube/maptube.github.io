@@ -33,7 +33,7 @@ camera.add( pointLight );
 
 //make the ground as a box
 const geomGround = new THREE.BoxGeometry( 10, 0.1, 10 );
-const matGround = new THREE.MeshBasicMaterial( { color: 0x0000f0 } );
+const matGround = new THREE.MeshBasicMaterial( { color: 0x008000 } );
 const ground = new THREE.Mesh( geomGround, matGround );
 ground.position.y=-0.1; // so the top of the box sits at y=0
 scene.add( ground );
@@ -65,13 +65,13 @@ const origin = new THREE.Mesh( geomOrigin, matOrigin );
 let swarm = new Swarm();
 swarm.spawn(scene,10,10);
 //swarm.drones[11].setLightState(false);
-for (var i=0; i<100; i++)
-{
-	//swarm.drones[i].setLightState(true);
-	swarm.drones[i].setLightColour(0x000060);
-	//swarm.drones[25].setLightColour(0xff0000);
-	//swarm.drones[i].setDeltaTarget(0,5,0);
-}
+//for (var i=0; i<100; i++)
+//{
+//	//swarm.drones[i].setLightState(true);
+//	swarm.drones[i].setLightColour(0x000060);
+//	//swarm.drones[25].setLightColour(0xff0000);
+//	//swarm.drones[i].setDeltaTarget(0,5,0);
+//}
 //swarm.setPattern(DronePatterns.f,-5,3,0);
 let pat_forward = function() {
 	console.log("hello from function 1!");
