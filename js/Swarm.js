@@ -94,5 +94,21 @@ class Swarm
         return compPat;
     }
 
+    setShape = (shape,x,y,z,scale) => {
+        //take a shape from DroneShapes.js and set the targets for the drones
+        //to make the shape in the sky
+        //Shapes are defined as a list of x,y,z,colour quadruples
+        var drone_num=0;
+        for (let i=0; i<shape.length; i++)
+        {
+            if (drone_num>=this.drones.length) break;
+            let dronexyz = shape[i];
+            this.drones[drone_num].setTarget(dronexyz.x*scale+x,dronexyz.y*scale+y,dronexyz.z*scale+z);
+            this.drones[drone_num].setLightState(true);
+            this.drones[drone_num].setLightColour(dronexyz.rgb);
+            ++drone_num;
+        }
+    }
+
 
 }

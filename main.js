@@ -6,6 +6,7 @@ import { TextureLoader, Texture } from 'three';
 import { LightDrone } from '/js/LightDrone.js';
 import { Swarm } from '/js/Swarm.js';
 import { DronePatterns } from '/js/DronePatterns.js';
+import { DroneShapes } from '/js/DroneShapes.js';
 import { Sequencer } from '/js/Sequencer.js';
 
 const sizex=16, sizey=8;
@@ -63,7 +64,7 @@ const origin = new THREE.Mesh( geomOrigin, matOrigin );
 //var drone = new LightDrone();
 //drone.tick();
 let swarm = new Swarm();
-swarm.spawn(scene,10,10);
+swarm.spawn(scene,12,10);
 //swarm.drones[11].setLightState(false);
 //for (var i=0; i<100; i++)
 //{
@@ -78,6 +79,23 @@ let pat_forward = function() {
 	for (let i=0; i<swarm.drones.length; i++) {
 		if (swarm.drones[i].lightIsOn) {
 			swarm.drones[i].setDeltaTarget(0,0,6);
+		}
+	}
+}
+let pat_rotateY = function(angle,ox,oy,oz) { //angle in degrees
+	//rotation function about origin
+	console.log("hello from function rotateY "+angle+" "+ox+" "+oy+" "+oz);
+	let a=angle/180.0*Math.PI; //need radians
+	for (let i=0; i<swarm.drones.length; i++) {
+		if (swarm.drones[i].lightIsOn) {
+			let x=swarm.drones[i].x-ox;
+			let y=swarm.drones[i].y-oy;
+			let z=swarm.drones[i].z-oz;
+			let ca = Math.cos(a);
+			let sa = Math.sin(a);
+			let x2=x*ca - y*sa;
+			let y2=x*sa + y*ca;
+			swarm.drones[i].setTarget(x2+ox,y2+oy,z+oz);
 		}
 	}
 }
@@ -116,40 +134,32 @@ let pat_magenta = function() {
 		}
 	}
 }
-let pat1_kala = function() {
-	console.log("hello from function 1!");
+let pat1_drones = function() {
+	//console.log("hello from function 1!");
 	let pat = swarm.compositePattern([
-		DronePatterns.KAPPA, DronePatterns.space2,
-		DronePatterns.alpha, DronePatterns.space2,
-		DronePatterns.lambda, DronePatterns.space2,
-		DronePatterns.alpha
+		DronePatterns.d, DronePatterns.space2,
+		DronePatterns.r, DronePatterns.space2,
+		DronePatterns.o, DronePatterns.space2,
+		DronePatterns.n, DronePatterns.space2,
+		DronePatterns.e, DronePatterns.space2,
+		DronePatterns.s
 	]);
 	swarm.setPattern(pat,-5,3,-2);
 }
-let pat2_genethlia = function() {
-	console.log("hello from function 1!");
-	let pat = swarm.compositePattern([
-		DronePatterns.GAMMA, DronePatterns.space2,
-		DronePatterns.epsilon, DronePatterns.space2,
-		DronePatterns.ni, DronePatterns.space2,
-		DronePatterns.epsilon, DronePatterns.space2,
-		DronePatterns.theta, DronePatterns.space2,
-		DronePatterns.lambda, DronePatterns.space2,
-		DronePatterns.yiota, DronePatterns.space2,
-		DronePatterns.alpha
-	]);
-	swarm.setPattern(pat,-6,3,-2);
+let pat2_four = function() {
+	let pat = swarm.compositePattern(
+		[DronePatterns._4]
+	);
+	swarm.setPattern(pat,0,4,-2);
 }
-let pat3_f = function() {
-	console.log("hello from function 1!");
+let pat3_good = function() {
 	let pat = swarm.compositePattern([
-		DronePatterns.PHI, DronePatterns.space2,
-		DronePatterns.lambda, DronePatterns.space2,
-		DronePatterns.omega, DronePatterns.space2,
-		DronePatterns.rho, DronePatterns.space2,
-		DronePatterns.alpha
+		DronePatterns.g, DronePatterns.space2,
+		DronePatterns.o, DronePatterns.space2,
+		DronePatterns.o, DronePatterns.space2,
+		DronePatterns.d
 	]);
-	swarm.setPattern(pat,-5,3,-1);
+	swarm.setPattern(pat,-3,3,-2);
 }
 let pat4_happy = function() {
 	let pat = swarm.compositePattern(
@@ -157,15 +167,22 @@ let pat4_happy = function() {
 	);
 	swarm.setPattern(pat,0,4,-2);
 }
+let pat5_cube = function() {
+	swarm.setShape(DroneShapes.cube_verts_8,0,4,-2,1.0);
+}
+//todo: rotate - how????
 //swarm.setPattern(pat1,-5,3,0);
 let sequencer = new Sequencer();
-sequencer.push(pat1_kala);
+//sequencer.push(pat4_happy);
+//for (let i=0; i<30; i++)
+//	sequencer.push(function() { pat_rotateY(12,0+1,4-1,-2); });
+sequencer.push(pat1_drones);
 sequencer.push(pat_blue);
 sequencer.push(pat_forward); //essentially a wait pattern so you can read the word
-sequencer.push(pat2_genethlia);
+sequencer.push(pat2_four);
 sequencer.push(pat_red);
 sequencer.push(pat_forward);
-sequencer.push(pat3_f);
+sequencer.push(pat3_good);
 sequencer.push(pat_magenta);
 sequencer.push(pat_forward);
 sequencer.push(pat4_happy);

@@ -92,7 +92,7 @@ class LightDrone {
             this.z+=dz*speed;
             //don't forget to update the mesh position
             this.mesh.position.set(this.x,this.y,this.z);
-            if (mag<0.05) this.isAtTarget=true;
+            if (mag</*0.05*/speed) this.isAtTarget=true;
         }
     }
 
